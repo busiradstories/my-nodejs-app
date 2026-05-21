@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محادثة مباشرة - منصة النجاح</title>
+    
+    <style>
+        /* 🎨 تصميم واتساب الاحترافي */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e5ddd5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-wrapper {
+            width: 100%;
+            max-width: 500px;
+            height: 90vh;
+            background: #e5ddd5;
+            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #d1d1d1;
+        }
+
+        /* 🟢 الهيدر (الشريط العلوي) */
+        .chat-header {
+            background: #008069;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .header-info h2 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .header-info p {
+            margin: 2px 0 0;
+            font-size: 0.85rem;
+            color: #d1f4ec;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        /* 💬 منطقة الرسائل */
+        .chat-container {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* 🪄 أنيميشن ظهور الرسالة */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message {
+            max-width: 80%;
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        .message.ai {
+            align-self: flex-start;
+        }
+
+        .message.user {
+            align-self: flex-end;
+        }
+
+        /* 💭 فقاعة الرسالة */
+        .bubble {
+            padding: 8px 12px 10px 14px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            position: relative;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            color: #111b21;
+        }
+
+        /* رسالة الوكيل (بيضاء على اليمين) */
+        .message.ai .bubble {
+            background: #ffffff;
+            border-top-right-radius: 0;
+        }
+
+        .message.ai .bubble::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -8px;
+            width: 0;
+            height: 0;
+            border-top: 0px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 12px solid #ffffff;
+        }
+
+        /* رسالة العميل (خضراء على اليسار) */
+        .message.user .bubble {
+            background: #dcf8c6;
+            border-top-left-radius: 0;
+        }
+
+        .message.user .bubble::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -8px;
+            width: 0;
+            height: 0;
+            border-top: 0px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-right: 12px solid #dcf8c6;
+        }
+
+        /* 🕒 وقت الرسالة */
+        .message-time {
+            font-size: 0.65rem;
+            color: #667781;
+            float: left;
+            margin-top: 8px;
+            margin-right: 15px;
+        }
+
+        /* ⌨️ شريط الإدخال */
+        .chat-input-container {
+            display: flex;
+            padding: 10px;
+            background: #f0f2f5;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            font-family: inherit;
+            font-size: 1rem;
+            background: #ffffff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .send-btn {
+            background: #00a884;
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .send-btn:hover {
+            background: #008f6f;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-wrapper">
+        <div class="chat-header">
+            <div class="avatar">👨‍💼</div>
+            <div class="header-info">
+                <h2>أ. هاشم - منصة النجاح</h2>
+                <p id="chatStatus">متصل الآن</p>
+            </div>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+            <div class="message ai">
+                <div class="bubble">
+                    مرحباً بك! 👋<br>
+                    أنا هنا لمساعدتك والإجابة على أي استفسار يخص فرصتنا. كيف يمكنني مساعدتك اليوم؟
+                    <span class="message-time" id="initialTime"></span>
+                </div>
+            </div>
+            </div>
+        
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="اكتب رسالتك..." autocomplete="off" />
+            <button class="send-btn" id="sendBtn">➤</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. إعدادات الربط مع n8n
+        const N8N_WEBHOOK = 'https://farizaatek.automationdxn.site/webhook/smartcloser';
+        
+        // 2. الذاكرة
+        let clientId = localStorage.getItem('smartcloser_client_id');
+        if (!clientId) {
+            clientId = 'client_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('smartcloser_client_id', clientId);
+        }
+        let chatHistory = [];
+
+        // تعريف عناصر الواجهة
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatStatus = document.getElementById('chatStatus');
+
+        // 3. دالة الوقت
+        function getCurrentTime() {
+            return new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+        }
+        document.getElementById('initialTime').innerText = getCurrentTime();
+
+        // 4. عرض الرسالة بأسلوب واتساب
+        function displayMessage(text, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
+            const formattedText = text.replace(/\n/g, '<br>');
+            
+            messageDiv.innerHTML = `
+                <div class="bubble">
+                    ${formattedText}
+                    <span class="message-time">${getCurrentTime()}</span>
+                </div>
+            `;
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // 5. دالة الإرسال لـ n8n
+        async function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            
+            // عرض رسالة العميل وتفريغ الحقل
+            displayMessage(text, true);
+            chatHistory.push(`العميل: ${text}`);
+            chatInput.value = '';
+            
+            // 💡 تغيير حالة الواتساب في الشريط العلوي فقط (بدون فقاعات)
+            chatStatus.innerText = 'يكتب...';
+            chatStatus.style.color = '#25D366'; // لون أخضر ساطع مثل واتساب
+            
+            try {
+                // إرسال البيانات للذكاء الاصطناعي
+                const response = await fetch(N8N_WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        client_id: clientId,
+                        client_name: "زائر",
+                        message: text,
+                        last_100_messages: chatHistory.join("\n")
+                    })
+                });
+                
+                if (!response.ok) throw new Error('فشل الاتصال');
+                const data = await response.json();
+                
+                // 💡 إعادة الحالة إلى "متصل الآن" بعد وصول الرد
+                chatStatus.innerText = 'متصل الآن';
+                chatStatus.style.color = '#d1f4ec';
+                
+                // استخراج الرد وعرضه
+                const agentReply = data.output || data.text || data.reply || "عذراً، جاري تحديث النظام.";
+                displayMessage(agentReply, false);
+                chatHistory.push(`أ. هاشم: ${agentReply}`);
+                
+            } catch (error) {
+                chatStatus.innerText = 'متصل الآن';
+                chatStatus.style.color = '#d1f4ec';
+                displayMessage('عذراً، انقطع الاتصال بالإنترنت.', false);
+            }
+        }
+        
+        // 6. الإرسال عبر الزر أو إنتر
+        sendBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            sendMessage();
+        });
+
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
