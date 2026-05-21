@@ -3,7 +3,7 @@ const app = express();
 
 app.get('/', (req, res) => {
   res.send(`
-  مرحباً! التطبيق شغال على Vercel بنجاح! 🎉ذ
+  مرحباً! التطبيق شغال على Vercel بنجاح! 🎉
   طمني عليك 
   `);
 });
