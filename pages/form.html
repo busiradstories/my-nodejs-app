@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج التسجيل والتقديم</title>
+    <link rel="stylesheet" href="../css/styleform.css">
+</head>
+<body>
+    
+    <!-- Application Form -->
+    <div class="form-container" id="formContainer">
+        <div class="form-header">
+            <h2>نموذج التقديم</h2>
+                <p>املأ البيانات التالية وسنتواصل معك خلال 24 ساعة</p>
+            </div>
+            
+            <form id="applicationForm" >
+                <div class="form-group" id="form-group">
+                    <label>الاسم الكامل *</label>
+                    <input type="text" placeholder="أدخل اسمك الكامل" id="fullName">
+                </div>
+                
+                <div class="form-group">
+                    <label>رقم الهاتف *</label>
+                    <input type="tel" name="phone"  placeholder="+967XXXXXXXXX">
+                </div>
+                
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" name="email" placeholder="example@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>العمر</label>
+                    <select>
+                        <option value="">اختر العمر</option>
+                        <option value="18-25">18-25</option>
+                        <option value="26-35">26-35</option>
+                        <option value="36-45">36-45</option>
+                        <option value="46+">46+</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>لماذا تريد الانضمام؟</label>
+                    <textarea name="motivation" placeholder="أخبرنا عن دوافعك للانضمام لفريقنا"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;" id="submit">
+                    إرسال الطلب
+                </button>
+                
+                <button type="button" class="btn btn-secondary" onclick="hideForm()" style="width: 100%; margin-top: 10px;">
+                    العودة
+                </button>
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✓</div>
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 28px; color: var(--gold-light); margin-bottom: 15px;">
+                    تم إرسال طلبك بنجاح!
+                </h3>
+                <p style="color: var(--grey);">سنتواصل معك خلال 24 ساعة على الرقم المسجل</p>
+                <button class="btn btn-secondary" onclick="resetForm()" style="margin-top: 20px;">
+                    العودة للرئيسية
+                </button>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    <!-- <div class="social-links">
+        <a class="li-hover" href="#" class="social-icon">فيسبوك📘</a>
+        <a class="li-hover" href="#" class="social-icon">📷</a>
+        <a class="li-hover" href="#" class="social-icon">🐦</a>
+                    <a class="li-hover" href="#" class="social-icon">📱</a>
+    </div> -->
+
+    <script>
+        function resetForm() {
+            document.getElementById('successMessage').classList.remove('active');
+            document.getElementById('applicationForm').style.display = 'block';
+            document.getElementById('applicationForm').reset();
+            hideForm();
+        }
+    </script>
+</body>
+</html>
