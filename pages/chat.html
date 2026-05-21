@@ -610,7 +610,10 @@
     </div>
 
     <script>
-        const N8N_WEBHOOK = 'https://farizaatek.automationdxn.site/webhook/smartcloser';
+        // const N8N_WEBHOOK = 'https://farizaatek.automationdxn.site/webhook/smartcloser';
+        // 💡 بدلاً من الرابط المباشر لـ n8n، نضع رابط سيرفرك (Node.js)
+        const SERVER_WEBHOOK = 'https://api.automationdxn.site/webhook/smartcloser';
+
         
         let clientId = localStorage.getItem('smartcloser_client_id');
         if (!clientId) {
@@ -682,7 +685,7 @@
 
         
         // const PROFILE_WEBHOOK = 'https://farizaatek.automationdxn.site/webhook/get_profile';
-        
+
         const currentDomain = window.location.hostname;
         const BASE_API = 'https://api.automationdxn.site'; // سيرفرك المركزي الثابت
 
@@ -1566,7 +1569,11 @@
             }
 
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', N8N_WEBHOOK, true);
+            // xhr.open('POST', N8N_WEBHOOK, true);
+            
+            // ✅ صح (استخدم المتغير الجديد)
+            xhr.open('POST', SERVER_WEBHOOK, true);
+
             // 💡 لاحظ: قمنا بحذف سطر Content-Type لكي يضبطه المتصفح كـ Multipart تلقائياً
 
             const progressContainer = document.getElementById('uploadProgressContainer');
@@ -1590,7 +1597,7 @@
                 if (xhr.status >= 200 && xhr.status < 300) {
                     try {
                         const data = JSON.parse(xhr.responseText);
-                        const agentReply = data.output || data.text || data.reply || "عذراً، جاري تحديث النظام.";
+                        const agentReply = data.output || data.text ||  data.reply || "عذراً، جاري تحديث النظام.";
                         displayMessage(agentReply, false);
                         saveChatToMemory(agentReply, false, '');
                         chatHistory.push(`أ. هاشم: ${agentReply}`);
