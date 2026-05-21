@@ -2,7 +2,10 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('مرحباً! التطبيق شغال على Vercel بنجاح! 🎉');
+  res.send(`
+  مرحباً! التطبيق شغال على Vercel بنجاح! 🎉ذ
+  طمني عليك 
+  `);
 });
 
 // 💡 التعديل هنا: Vercel لا يحتاج لسطر app.listen
